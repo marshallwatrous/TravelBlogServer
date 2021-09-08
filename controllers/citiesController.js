@@ -9,6 +9,9 @@ const db = require('../models');
 router.get('/', (req, res) => {
   db.City.find({}, (err, foundCities) => {
     console.log('hello from get')
+
+    console.log(foundCities)
+
     if (err) return console.log(err);
 
     
@@ -18,18 +21,20 @@ router.get('/', (req, res) => {
 
 
 // actual route - GET /api/cities/:id
-router.get('/cities/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   db.City.findById(req.params.id, (err, foundCity) => {
       console.log('hello from one city')
     if (err) return console.log(err);
     
     res.json(foundCity);
+    
   });
 });
 
 
 // actual route - POST /api/cities
 router.post('/', (req, res) => {
+  
   db.City.create(req.body, (err, savedCity) => {
       console.log('hello from post')
     if (err) return console.log(err);
@@ -55,9 +60,9 @@ router.put('/:id', (req, res) => {
 
 // actual route - DELETE /api/cities/:id
 router.delete('/:id', (req, res) => {
+  console.log('delete route')
   db.City.findByIdAndDelete(req.params.id, (err, deletedCity) => {
     if (err) return console.log(err);
-
     res.json({ messaage:'Successful deletion' });
   });
 });
